@@ -1,11 +1,21 @@
 # Data-retrieval-on-Bengali-corpus
 A data retrieval system on a Bengali news article corpus, summer project-'21. </br>
 **Note:**</br>
-To run the system properly, the ```root``` path needs to be changed accordingly in all the .py files. 
+  - To run the system properly, the ```root``` path needs to be changed accordingly in all the .py files. 
+  - Folders, pickled files excluded in this collection 
+  - Under modification (as if someone will use XD)
+---
+**Functionality:**</br>
+  - Takes a collection of queries as input, and the relevant corpus to perform the search operation on
+  - If the .py files are run as per the given chronology, they would
+    - Create a query term dictionary
+    - Cluster words from the corpus around the dictionary keys (using prefix match)
+    - Search the corpus (BM25) and prints the top results corresponding to every query item
+  - Path names, variable names have to modified manually as per need 
+---
 
 ## Bengali-data (folder)
   - Contains entire the corpus
-  - (Not here in this repo)
 ## search_res
   - Stores the pickled search results, query ID-wise
 ---
@@ -17,7 +27,7 @@ To run the system properly, the ```root``` path needs to be changed accordingly 
   - Relevance score of documents wrt the query items
   - (Not here in this repo)
 ### *sw*
-  - A bengali stop-word list (provided by sir)
+  - A bengali stop-word list (provided by the instructor)
 ---
 ## py files
   Need to be run following this particular chronology
@@ -50,6 +60,7 @@ To run the system properly, the ```root``` path needs to be changed accordingly 
 ### *co_occ.py*
   - constructs the co-occurrence matrix and finds k-nearest neighbours from the cluster for each query term
   - stores the result into ```co_occurrence_matrix```
+  - needs improvements
 ---
 ## pickle files
   Roles already explained
