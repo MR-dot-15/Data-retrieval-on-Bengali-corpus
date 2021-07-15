@@ -1,0 +1,56 @@
+1. 
+bar girl query (Q36)
+expected... clustering will boost accuracy
+'নিষেধাজ্ঞা' and 'নিষেধ' are identified as variants
+2. 
+in a few queries, there is a spelling mismatch
+no way to make up for this
+a very prominent issue with co-occurrence
+eg ডান্স and ড্যান্স
+মণিকা and মনিকা
+3.
+removed বার from the stop-word list (wreft Q36)
+4. 
+doc id 75359 -> incompatibility issue
+5. 
+added a function: rf.match_value()
+word1, word2, occ(word2) -> 
+intersection * e^(-symmetric diff) * log(occ) * exp(prefix match length)
+if word1 is not in the prefix match cluster, it finds out the 'best fit'
+eg for 'বিদ্যুৎ', it finds 'বিদ্যুত্'
+6.
+customization of bm score calculation
+bm score = actual score * e^(-len(cluster))
+7.
+possibly relevant documents -> say the extended query: {t₁, t₂, ..., tₙ}
+set of docs = union(doc ids where tᵢ occurs})
+improvement in run-time
+one illustration: Q50
+without the above mentioned func - time 417.42
+with the func - time 11.59
+8.
+র added to sw list
+
+========================================================================
+WHAT's NEW
+
+0. reconstruction of rel_list
+1. inclusion of words like ডান্সবার, লালুপ্রসাদ etc
+2. best match: used for নাগাল্যন্ড, প্রতিরক্ষা
+3. 1 + 2 used simultaneously: জলবিদ্যুত্
+4. exclusion of useless glued-pieces: সেচপ্রকল্প, মাউন্টেনিয়ারিং 
+(using co-occurrence values) 
+5. so that 4 can be used, implementation of [0,1] scheme
+6. the tanh classifier
+6.1
+reducing the prefix match cut-off to 50 % of the longest word
+7. customization in bm score calculation: instance_weight
+8. given a few words, prediction of more context-based terms:
+8.1
+expander-1: co-occurrence vector, element-wise mult
+expander-2: probab(a term appearing in intersect) and its freq
+8.2
+expander-2 -> expander-3:
+used for 'বাংলাদেশে রাজনৈতিক' pair
+using one or two relevant doc as training set
+9. run-time improvement: finding possibly relevant doc set

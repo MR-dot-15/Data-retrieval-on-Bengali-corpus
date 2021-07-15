@@ -1,10 +1,11 @@
 '''
     accesses each search result database from search_res
     calculates precision, recall 
-    prints the top (bm score) 20 result
 '''
+
 import pickle
 import numpy as np
+import matplotlib.pyplot as plt
 root = r"C:\Users\rmukh\OneDrive\Desktop\Summer 21\summer_internship_21\Bengali-data"
 
 # accessing document id database
@@ -12,13 +13,21 @@ with open('docid_db', 'rb') as f:
     doc_id = pickle.load(f)
 
 # accessing the relevance list 
-with open("bn.qrels.76-125.2010.txt", 'r') as f:
+with open("rel_list.txt", 'r') as f:
     relevance_list = f.read().split('\n')
 
 relevance_list = [i.split(' ') for i in relevance_list]
 
+i = 76 - 75
+prec_vec = []
+rec_vec = []
+
 # iterating over already made search results of queries
-for index in range(1,6):
+for index in range(i, i+1):
+    # apparently there is no relevant doc in the corpus
+    # like wth!
+    if index == 48:
+        continue
     print("Query ", str(index), '\n')
     precision, recall= [], []
     no_retrieved, no_rel = 0, 0
@@ -30,15 +39,15 @@ for index in range(1,6):
     tot_rel = len(rel_list)
 
     # accessing the search result stored in search_res directory
-    with open(root + "\\search_res\\" + "query" + str(index), 'rb') as f:
-        dic = pickle.load(f)
+    with open(root + "\\search_res_raw" + "\\query" + str(index), 'rb') as f:
+        search_result = pickle.load(f)
     
-    for i in dic.keys():
+    for i in search_result.keys():
         # file name
         file = doc_id[i].split('\\')[-1]
         print(f"{file:<25}", end = '')
         # bm score
-        print(f"{round(dic[i], 2):^10}", end = '')
+        print(f"{round(search_result[i], 2):^10}", end = '')
 
         # precision and recall calculation
         if file in [i[2] for i in rel_list]:
@@ -50,9 +59,13 @@ for index in range(1,6):
 
         no_retrieved += 1
 
-        prec = sum(precision)*1.0/no_retrieved
-        rec = sum(recall)*1.0/tot_rel
+        prec = sum(precision)/no_retrieved
+        rec = sum(recall)/tot_rel
+
+        prec_vec.append(prec)
+        rec_vec.append(rec)
 
         print(f"{round(prec,2):^5}", end = '')
         print(f"{round(rec,2):>5}", end = '\n')
-    
+
+
