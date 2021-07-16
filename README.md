@@ -3,7 +3,7 @@ A data retrieval system on a Bengali news article corpus, summer project-'21. </
 **Note:**</br>
   - To run the system properly, the ```root``` path needs to be changed accordingly in all the .py files. 
   - Folders, pickled files excluded in this collection 
-  - Under modification (as if someone will use XD)
+  - Under modification, too lazy to do in one go
 ---
 **Functionality:**</br>
   - Takes a collection of queries as input, and the relevant corpus to perform the search operation on
@@ -12,12 +12,7 @@ A data retrieval system on a Bengali news article corpus, summer project-'21. </
     - Cluster words from the corpus around the dictionary keys (using prefix match)
     - Search the corpus (BM25) and prints the top results corresponding to every query item
   - Path names, variable names have to modified manually as per need 
----
 
-## Bengali-data (folder)
-  - Contains entire the corpus
-## search_res
-  - Stores the pickled search results, query ID-wise
 ---
 ## txt files
 ### *bn.topics*
@@ -25,7 +20,15 @@ A data retrieval system on a Bengali news article corpus, summer project-'21. </
   - (Not here in this repo)
 ### *bn.qrels*
   - Relevance score of documents wrt the query items
+  - Had junks
   - (Not here in this repo)
+### *eliminated_items_in_rel_list*
+  - Junks (i.e. file names which are not in corpus) off bn.qrels
+### *notes*
+  - Yeah, just notes
+### *rel_lis*
+  - Refied bn.qrels
+  - rel_lis + eliminated ... list = bn.qrels
 ### *sw*
   - A bengali stop-word list (provided by the instructor)
 ---
@@ -53,6 +56,9 @@ A data retrieval system on a Bengali news article corpus, summer project-'21. </
 ### *main.py*
   - conducts the actual searching operation by picking up queries from ```bn.topics```
   - stores the search results (top 20 BM ranks) in the ```search_res``` directory
+### *main_new.py, main_custom.py*
+  - similar to main.py
+  - have a few extended functionalities (e.g. custom uses a custom BM scoring)
 ### *search_res_filter*
   - retrieves the pickled search result
   - measures precision, accuracy scores
@@ -60,7 +66,6 @@ A data retrieval system on a Bengali news article corpus, summer project-'21. </
 ### *co_occ.py*
   - constructs the co-occurrence matrix and finds k-nearest neighbours from the cluster for each query term
   - stores the result into ```co_occurrence_matrix```
-  - needs improvements
 ---
 ## pickle files
   Roles already explained
